@@ -6,7 +6,7 @@ const SearchBox = ({ searchHandler }) => {
   };
 
   return (
-    <form className="search">
+    <form style={{maxWidth:'100%', marginTop:'10px'}} className="search">
       <input
         onChange={handleSearchInputChange}
         type="text"

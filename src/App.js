@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import DirectoryTable from "./components/DirectoryTable";
-import AddUserForm from "./components/AddUserForm";
+import UserList from "./components/UserList";
 import EditUserForm from "./components/EditUserForm";
 import Pagination from "./components/Pagination";
 import Modal from "./components/Modal";
@@ -12,8 +11,8 @@ const App = () => {
   const [editing, setEditing] = useState(false);
   const initialFormState = {
     id: null,
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     username: "",
     email: "",
     phone: "",
@@ -29,8 +28,8 @@ const App = () => {
       .then((response) =>
         response.data.map((user) => ({
           id: user.id,
-          first_name: user.firstName,
-          last_name: user.lastName,
+          firstName: user.firstName,
+          lastName: user.lastName,
           username: user.username,
           email: user.email,
           phone: user.phone,
@@ -42,22 +41,13 @@ const App = () => {
       });
   }, []);
 
-  // incrementing ids + adding placeholder image manually
-  // TODO: update id and image handling when tying this to a database
-  const addUser = (user) => {
-    toggle();
-    user.id = users.length + 1;
-    user.image = "https://randomuser.me/api/portraits/thumb/lego/1.jpg";
-    setUsers([user, ...users]);
-  };
-
   const editUser = (user) => {
     setEditing(true);
     toggle();
     setCurrentUser({
       id: user.id,
-      first_name: user.first_name,
-      last_name: user.last_name,
+      firstName: user.firstName,
+      lastName: user.lastName,
       username: user.username,
       email: user.email,
       image: user.image,
@@ -79,16 +69,11 @@ const App = () => {
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-  // change page
+  // page change
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
-      <div className="container">
-        <button className="button-add" onClick={toggle}>
-          Add User
-        </button>
-      </div>
       {editing ? (
         <Modal
           isShowing={isShowing}
@@ -101,14 +86,9 @@ const App = () => {
             />
           }
         />
-      ) : (
-        <Modal
-          isShowing={isShowing}
-          hide={toggle}
-          content={<AddUserForm addUser={addUser} />}
-        />
+      ) : (<div></div>
       )}
-      <DirectoryTable
+      <UserList
         users={currentUsers}
         editUser={editUser}
         deleteUser={deleteUser}

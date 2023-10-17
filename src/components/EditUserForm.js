@@ -26,8 +26,8 @@ const EditUserForm = (props) => {
         <label>First Name</label>
         <input
           type="text"
-          name="first_name"
-          value={user.first_name}
+          name="firstName"
+          value={user.firstName}
           onChange={handleInputChange}
           pattern="[a-zA-Z]+"
           required
@@ -37,8 +37,8 @@ const EditUserForm = (props) => {
         <label>Last Name</label>
         <input
           type="text"
-          name="last_name"
-          value={user.last_name}
+          name="lastName"
+          value={user.lastName}
           onChange={handleInputChange}
           pattern="[a-zA-Z]+"
           required

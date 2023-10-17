@@ -38,7 +38,7 @@ const useSortableData = (users, config = null) => {
   return { users: sortedUsers, requestSort, sortConfig };
 };
 
-const DirectoryTable = (props) => {
+const UserList = (props) => {
   const { users, requestSort, sortConfig } = useSortableData(props.users);
   const { editUser, deleteUser } = props;
   const [searchValue, setSearchValue] = useState("");
@@ -66,15 +66,15 @@ const DirectoryTable = (props) => {
     <>
       <div className="container">
         <SearchBox searchHandler={searchHandler} />
-        <table>
-          <thead>
+        <table style={{background:'#b9b9b9', marginTop:'10px'}}>
+          <thead style={{background:'#ffffff'}}>
             <tr>
               <th></th>
               <th>
                 <button
                   type="button"
-                  onClick={() => requestSort("first_name")}
-                  className={getClassNamesFor("first_name")}
+                  onClick={() => requestSort("firstName")}
+                  className={getClassNamesFor("firstName")}
                 >
                   First Name
                 </button>
@@ -82,8 +82,8 @@ const DirectoryTable = (props) => {
               <th>
                 <button
                   type="button"
-                  onClick={() => requestSort("last_name")}
-                  className={getClassNamesFor("last_name")}
+                  onClick={() => requestSort("lastName")}
+                  className={getClassNamesFor("lastName")}
                 >
                   Last Name
                 </button>
@@ -115,7 +115,7 @@ const DirectoryTable = (props) => {
                   Phone
                 </button>
               </th>
-              <th></th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -125,11 +125,11 @@ const DirectoryTable = (props) => {
                   <td>
                     <img
                       src={user.image}
-                      alt={user.first_name + " " + user.last_name}
+                      alt={user.firstName + " " + user.lastName}
                     />
                   </td>
-                  <td>{user.first_name}</td>
-                  <td>{user.last_name}</td>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
                   <td>{user.username}</td>
                   <td>{user.email}</td>
                   <td>{user.phone}</td>
@@ -165,4 +165,4 @@ const DirectoryTable = (props) => {
   );
 };
 
-export default DirectoryTable;
+export default UserList;

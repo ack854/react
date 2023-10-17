@@ -126,7 +126,7 @@ thead button.descending::after {
   font-weight: 700;
   line-height: 1;
   color: #000;
-  opacity: 0.3;
+  opacity: 0.9;
   cursor: pointer;
   border: none;
 }
@@ -141,7 +141,7 @@ thead button.descending::after {
 .search input,
 .form-group input {
   display: block;
-  width: 95%;
+  width: 97%;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
