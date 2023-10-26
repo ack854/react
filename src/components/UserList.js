@@ -1,8 +1,11 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import SearchBox from "./SearchBox";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import { useNavigate, useLocation } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const useSortableData = (users, config = null) => {
   const [sortConfig, setSortConfig] = useState(config);
@@ -39,6 +42,17 @@ const useSortableData = (users, config = null) => {
 };
 
 const UserList = (props) => {
+  const { state } = useLocation();
+  console.log(state);
+  console.log("toast");
+  useEffect(() => {
+    if (state && state.isUpdated) {
+      toast.success("User updated sucessfully.", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    }
+  }, []);
+  const navigate = useNavigate();
   const { users, requestSort, sortConfig } = useSortableData(props.users);
   const { editUser, deleteUser } = props;
   const [searchValue, setSearchValue] = useState("");
@@ -62,12 +76,17 @@ const UserList = (props) => {
     );
   });
 
+  const goToEdit = (user) => {
+    console.log("edit", user);
+    navigate("/edit", { state: { user: user } });
+  };
+
   return (
     <>
       <div className="container">
         <SearchBox searchHandler={searchHandler} />
-        <table style={{background:'#b9b9b9', marginTop:'10px'}}>
-          <thead style={{background:'#ffffff'}}>
+        <table style={{ background: "#b9b9b9", marginTop: "10px" }}>
+          <thead style={{ background: "#ffffff" }}>
             <tr>
               <th></th>
               <th>
@@ -135,16 +154,17 @@ const UserList = (props) => {
                   <td>{user.phone}</td>
                   <td>
                     <IconButton
-                    style={{color:'#247ba0'}}
+                      style={{ color: "#247ba0" }}
                       aria-label="edit"
                       onClick={() => {
                         editUser(user);
+                        goToEdit(user);
                       }}
                     >
                       <EditIcon />
                     </IconButton>
                     <IconButton
-                    style={{color:'#e33838'}}
+                      style={{ color: "#e33838" }}
                       aria-label="delete"
                       onClick={() => deleteUser(user.id)}
                     >
@@ -160,6 +180,7 @@ const UserList = (props) => {
             )}
           </tbody>
         </table>
+        <ToastContainer />
       </div>
     </>
   );
